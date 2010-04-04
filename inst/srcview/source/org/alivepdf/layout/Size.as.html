@@ -1,0 +1,107 @@
+<!-- saved from url=(0014)about:internet -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Size.as</title>
+<link rel="stylesheet" type="text/css" href="../../../../SourceStyles.css"/>
+</head>
+
+<body><pre><span class="ActionScriptpackage">package</span> <span class="ActionScriptDefault_Text">org</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">alivepdf</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">layout</span>
+<span class="ActionScriptBracket/Brace">{</span>
+    <span class="ActionScriptASDoc">/**
+     * Represents the size of the printed page.
+     **/</span>
+    <span class="ActionScriptReserved">public</span> <span class="ActionScriptReserved">final</span> <span class="ActionScriptclass">class</span> <span class="ActionScriptDefault_Text">Size</span>
+    <span class="ActionScriptBracket/Brace">{</span>
+        <span class="ActionScriptASDoc">/**
+         * Constants representing the various paper sizes.
+         **/</span>
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptReserved">static</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">A3</span>:<span class="ActionScriptDefault_Text">Size</span>          <span class="ActionScriptOperator">=</span> <span class="ActionScriptReserved">new</span> <span class="ActionScriptDefault_Text">Size</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">[</span>841.89<span class="ActionScriptOperator">,</span> 1190.55<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptOperator">,</span><span class="ActionScriptString">"A3"</span><span class="ActionScriptOperator">,</span>      <span class="ActionScriptBracket/Brace">[</span>11.7<span class="ActionScriptOperator">,</span> 16.5<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptOperator">,</span><span class="ActionScriptBracket/Brace">[</span>297<span class="ActionScriptOperator">,</span> 420<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptBracket/Brace">)</span>;
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptReserved">static</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">A4</span>:<span class="ActionScriptDefault_Text">Size</span>          <span class="ActionScriptOperator">=</span> <span class="ActionScriptReserved">new</span> <span class="ActionScriptDefault_Text">Size</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">[</span>595.28<span class="ActionScriptOperator">,</span> 841.89<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptOperator">,</span>    <span class="ActionScriptString">"A4"</span><span class="ActionScriptOperator">,</span>      <span class="ActionScriptBracket/Brace">[</span>8.3<span class="ActionScriptOperator">,</span> 11.7<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptBracket/Brace">[</span>210<span class="ActionScriptOperator">,</span> 297<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptBracket/Brace">)</span>;
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptReserved">static</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">A5</span>:<span class="ActionScriptDefault_Text">Size</span>          <span class="ActionScriptOperator">=</span> <span class="ActionScriptReserved">new</span> <span class="ActionScriptDefault_Text">Size</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">[</span>420.94<span class="ActionScriptOperator">,</span> 595.28<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptOperator">,</span>    <span class="ActionScriptString">"A5"</span><span class="ActionScriptOperator">,</span>      <span class="ActionScriptBracket/Brace">[</span>5.8<span class="ActionScriptOperator">,</span>  8.3<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptBracket/Brace">[</span>148<span class="ActionScriptOperator">,</span> 210<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptBracket/Brace">)</span>;
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptReserved">static</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">LETTER</span>:<span class="ActionScriptDefault_Text">Size</span>      <span class="ActionScriptOperator">=</span> <span class="ActionScriptReserved">new</span> <span class="ActionScriptDefault_Text">Size</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">[</span>612<span class="ActionScriptOperator">,</span> 792<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptOperator">,</span>        <span class="ActionScriptString">"Letter"</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptBracket/Brace">[</span>8.5<span class="ActionScriptOperator">,</span> 11<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptOperator">,</span>   <span class="ActionScriptBracket/Brace">[</span>216<span class="ActionScriptOperator">,</span> 279<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptBracket/Brace">)</span>;
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptReserved">static</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">LEGAL</span>:<span class="ActionScriptDefault_Text">Size</span>       <span class="ActionScriptOperator">=</span> <span class="ActionScriptReserved">new</span> <span class="ActionScriptDefault_Text">Size</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">[</span>612<span class="ActionScriptOperator">,</span> 1008<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptOperator">,</span>        <span class="ActionScriptString">"Legal"</span><span class="ActionScriptOperator">,</span>  <span class="ActionScriptBracket/Brace">[</span>8.5<span class="ActionScriptOperator">,</span> 14<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptOperator">,</span>   <span class="ActionScriptBracket/Brace">[</span>216<span class="ActionScriptOperator">,</span> 356<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptBracket/Brace">)</span>;
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptReserved">static</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">TABLOID</span>:<span class="ActionScriptDefault_Text">Size</span>     <span class="ActionScriptOperator">=</span> <span class="ActionScriptReserved">new</span> <span class="ActionScriptDefault_Text">Size</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">[</span>792<span class="ActionScriptOperator">,</span> 1224<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptOperator">,</span>        <span class="ActionScriptString">"Tabloid"</span><span class="ActionScriptOperator">,</span><span class="ActionScriptBracket/Brace">[</span>11<span class="ActionScriptOperator">,</span> 17<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptOperator">,</span>    <span class="ActionScriptBracket/Brace">[</span>279<span class="ActionScriptOperator">,</span> 432<span class="ActionScriptBracket/Brace">]</span><span class="ActionScriptBracket/Brace">)</span>;
+
+        <span class="ActionScriptASDoc">/**
+         * An array containing all the available paper sizes.
+         **/</span>
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptReserved">static</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">sizes</span>:<span class="ActionScriptDefault_Text">Array</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptReserved">new</span> <span class="ActionScriptDefault_Text">Array</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptDefault_Text">A3</span><span class="ActionScriptOperator">,</span><span class="ActionScriptDefault_Text">A4</span><span class="ActionScriptOperator">,</span><span class="ActionScriptDefault_Text">A5</span><span class="ActionScriptOperator">,</span><span class="ActionScriptDefault_Text">LETTER</span><span class="ActionScriptOperator">,</span><span class="ActionScriptDefault_Text">LEGAL</span><span class="ActionScriptOperator">,</span><span class="ActionScriptDefault_Text">TABLOID</span><span class="ActionScriptBracket/Brace">)</span>;
+
+        <span class="ActionScriptASDoc">/**
+         * The dimensions used by the PDF engine to determine page extents.
+         **/</span>
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">dimensions</span>:<span class="ActionScriptDefault_Text">Array</span>;
+
+        <span class="ActionScriptASDoc">/**
+         * A friendly label for users.
+         **/</span>
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">label</span>:<span class="ActionScriptDefault_Text">String</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptString">""</span>;
+        <span class="ActionScriptASDoc">/**
+         * The dimensions, in inches.  This should be used for a friendly display for
+         * users and not in dimension calculations.
+         */</span>
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">inchesSize</span>:<span class="ActionScriptDefault_Text">Array</span>;
+        <span class="ActionScriptASDoc">/**
+         * The dimensions, in mm.  This should be used for a friendly display for
+         * users and not in dimension calculations.
+         */</span>
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">mmSize</span>:<span class="ActionScriptDefault_Text">Array</span>;
+
+        <span class="ActionScriptASDoc">/**
+         * Given a String representing the label of a size, or a Size object, this
+         * returns the Size object that corresponds to it.  Returns null on invalid
+         * size.
+         **/</span>
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptReserved">static</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptDefault_Text">getSize</span><span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">value</span>:<span class="ActionScriptDefault_Text">Object</span> <span class="ActionScriptBracket/Brace">)</span> : <span class="ActionScriptDefault_Text">Size</span>
+        
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptReserved">if</span><span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">value</span> <span class="ActionScriptReserved">is</span> <span class="ActionScriptDefault_Text">Size</span> <span class="ActionScriptBracket/Brace">)</span> <span class="ActionScriptBracket/Brace">{</span> <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">Size</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">value</span> <span class="ActionScriptBracket/Brace">)</span>; <span class="ActionScriptBracket/Brace">}</span>
+            
+            <span class="ActionScriptReserved">if</span><span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">value</span> <span class="ActionScriptReserved">is</span> <span class="ActionScriptDefault_Text">String</span> <span class="ActionScriptBracket/Brace">)</span>
+            <span class="ActionScriptBracket/Brace">{</span>
+                <span class="ActionScriptReserved">for each</span> <span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">s</span>:<span class="ActionScriptDefault_Text">Size</span> <span class="ActionScriptReserved">in</span> <span class="ActionScriptDefault_Text">sizes</span> <span class="ActionScriptBracket/Brace">)</span>
+                <span class="ActionScriptBracket/Brace">{</span>
+                    <span class="ActionScriptReserved">if</span><span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">s</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">label</span> <span class="ActionScriptOperator">==</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">String</span> <span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptDefault_Text">value</span><span class="ActionScriptBracket/Brace">)</span> <span class="ActionScriptBracket/Brace">)</span> <span class="ActionScriptBracket/Brace">)</span>
+                    <span class="ActionScriptBracket/Brace">{</span>
+                        <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">s</span>;
+                    <span class="ActionScriptBracket/Brace">}</span>
+                <span class="ActionScriptBracket/Brace">}</span>
+            <span class="ActionScriptBracket/Brace">}</span>
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptReserved">null</span>;
+        <span class="ActionScriptBracket/Brace">}</span>
+
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">get</span> <span class="ActionScriptDefault_Text">fullLabel</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">)</span> : <span class="ActionScriptDefault_Text">String</span>
+        
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptComment">//Returns format like: Letter - 8.5"x11" - 216x356mm
+</span>            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">label</span> <span class="ActionScriptOperator">+</span> <span class="ActionScriptString">" - "</span> <span class="ActionScriptOperator">+</span> <span class="ActionScriptDefault_Text">inchesSize</span><span class="ActionScriptBracket/Brace">[</span>0<span class="ActionScriptBracket/Brace">]</span> <span class="ActionScriptOperator">+</span> <span class="ActionScriptString">"x"</span> <span class="ActionScriptOperator">+</span> <span class="ActionScriptDefault_Text">inchesSize</span><span class="ActionScriptBracket/Brace">[</span>1<span class="ActionScriptBracket/Brace">]</span> <span class="ActionScriptOperator">+</span> <span class="ActionScriptString">"\" - "</span> <span class="ActionScriptOperator">+</span> <span class="ActionScriptDefault_Text">mmSize</span><span class="ActionScriptBracket/Brace">[</span>0<span class="ActionScriptBracket/Brace">]</span> <span class="ActionScriptOperator">+</span> <span class="ActionScriptString">"x"</span> <span class="ActionScriptOperator">+</span> <span class="ActionScriptDefault_Text">mmSize</span><span class="ActionScriptBracket/Brace">[</span>1<span class="ActionScriptBracket/Brace">]</span> <span class="ActionScriptOperator">+</span> <span class="ActionScriptString">"mm"</span>;
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptDefault_Text">toString</span> <span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">String</span> 
+        
+        <span class="ActionScriptBracket/Brace">{</span>
+            
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">fullLabel</span>;
+            
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptDefault_Text">clone</span> <span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">Size</span> 
+        
+        <span class="ActionScriptBracket/Brace">{</span>
+            
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptReserved">new</span> <span class="ActionScriptDefault_Text">Size</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">dimensions</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">slice</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">)</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">label</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">inchesSize</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">slice</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">)</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">mmSize</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">slice</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">)</span> <span class="ActionScriptBracket/Brace">)</span>;
+            
+        <span class="ActionScriptBracket/Brace">}</span>
+
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptDefault_Text">Size</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">pixelsSize</span>:<span class="ActionScriptDefault_Text">Array</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">pLabel</span>:<span class="ActionScriptDefault_Text">String</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">pInchesSize</span>:<span class="ActionScriptDefault_Text">Array</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">pMmSize</span>:<span class="ActionScriptDefault_Text">Array</span> <span class="ActionScriptBracket/Brace">)</span>
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptReserved">this</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">dimensions</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">pixelsSize</span>;
+            <span class="ActionScriptReserved">this</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">label</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">pLabel</span>;
+            <span class="ActionScriptReserved">this</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">inchesSize</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">pInchesSize</span>;
+            <span class="ActionScriptReserved">this</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">mmSize</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">pMmSize</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+    <span class="ActionScriptBracket/Brace">}</span>
+<span class="ActionScriptBracket/Brace">}</span></pre></body>
+</html>

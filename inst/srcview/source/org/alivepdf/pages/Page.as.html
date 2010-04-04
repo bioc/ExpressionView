@@ -1,0 +1,284 @@
+<!-- saved from url=(0014)about:internet -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Page.as</title>
+<link rel="stylesheet" type="text/css" href="../../../../SourceStyles.css"/>
+</head>
+
+<body><pre><span class="ActionScriptpackage">package</span> <span class="ActionScriptDefault_Text">org</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">alivepdf</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">pages</span>
+<span class="ActionScriptBracket/Brace">{</span>
+    <span class="ActionScriptReserved">import</span> <span class="ActionScriptDefault_Text">org</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">alivepdf</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">events</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">PagingEvent</span>;
+    <span class="ActionScriptReserved">import</span> <span class="ActionScriptDefault_Text">org</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">alivepdf</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">layout</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">Orientation</span>;
+    <span class="ActionScriptReserved">import</span> <span class="ActionScriptDefault_Text">org</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">alivepdf</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">layout</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">Size</span>;
+    <span class="ActionScriptReserved">import</span> <span class="ActionScriptDefault_Text">org</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">alivepdf</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">layout</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">Unit</span>;
+    
+    <span class="ActionScriptReserved">public</span> <span class="ActionScriptReserved">final</span> <span class="ActionScriptclass">class</span> <span class="ActionScriptDefault_Text">Page</span>
+    <span class="ActionScriptBracket/Brace">{</span>
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_width</span>:<span class="ActionScriptDefault_Text">Number</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_height</span>:<span class="ActionScriptDefault_Text">Number</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_fwPt</span>:<span class="ActionScriptDefault_Text">Number</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_fhPt</span>:<span class="ActionScriptDefault_Text">Number</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_wPt</span>:<span class="ActionScriptDefault_Text">Number</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_hPt</span>:<span class="ActionScriptDefault_Text">Number</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_fw</span>:<span class="ActionScriptDefault_Text">Number</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_fh</span>:<span class="ActionScriptDefault_Text">Number</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_w</span>:<span class="ActionScriptDefault_Text">Number</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_h</span>:<span class="ActionScriptDefault_Text">Number</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_rotation</span>:<span class="ActionScriptDefault_Text">Number</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_page</span>:<span class="ActionScriptDefault_Text">int</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_pageTransition</span>:<span class="ActionScriptDefault_Text">String</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_content</span>:<span class="ActionScriptDefault_Text">String</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_annots</span>:<span class="ActionScriptDefault_Text">String</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_orientation</span>:<span class="ActionScriptDefault_Text">String</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_size</span>:<span class="ActionScriptDefault_Text">Size</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_format</span>:<span class="ActionScriptDefault_Text">Array</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_k</span>:<span class="ActionScriptDefault_Text">Number</span>;
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">_unit</span>:<span class="ActionScriptDefault_Text">String</span>;
+    
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptDefault_Text">Page</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">pOrientation</span>:<span class="ActionScriptDefault_Text">String</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">unit</span>:<span class="ActionScriptDefault_Text">String</span><span class="ActionScriptOperator">=</span><span class="ActionScriptString">"Mm"</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">size</span>:<span class="ActionScriptDefault_Text">Object</span><span class="ActionScriptOperator">=</span><span class="ActionScriptReserved">null</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">pRotation</span>:<span class="ActionScriptDefault_Text">Number</span><span class="ActionScriptOperator">=</span>0 <span class="ActionScriptBracket/Brace">)</span>
+        <span class="ActionScriptBracket/Brace">{</span>    
+            <span class="ActionScriptDefault_Text">_orientation</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">pOrientation</span>;
+            
+            <span class="ActionScriptDefault_Text">_rotation</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">pRotation</span>;
+                        
+            <span class="ActionScriptReserved">this</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">_unit</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">setUnit</span><span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">unit</span> <span class="ActionScriptBracket/Brace">)</span>;
+
+            <span class="ActionScriptDefault_Text">_size</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">Size</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">getSize</span><span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">size</span> <span class="ActionScriptBracket/Brace">)</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">clone</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">)</span>;
+            
+            <span class="ActionScriptReserved">if</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">_size</span> <span class="ActionScriptOperator">!=</span> <span class="ActionScriptReserved">null</span> <span class="ActionScriptBracket/Brace">)</span>
+                 <span class="ActionScriptDefault_Text">_format</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_size</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">dimensions</span>;
+                 
+            <span class="ActionScriptReserved">else</span> <span class="ActionScriptReserved">throw</span> <span class="ActionScriptReserved">new</span> <span class="ActionScriptDefault_Text">RangeError</span> <span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptString">"Incorrect dimensions."</span><span class="ActionScriptBracket/Brace">)</span>;
+            
+            <span class="ActionScriptDefault_Text">_fwPt</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_format</span><span class="ActionScriptBracket/Brace">[</span>0<span class="ActionScriptBracket/Brace">]</span>;
+            <span class="ActionScriptDefault_Text">_fhPt</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_format</span><span class="ActionScriptBracket/Brace">[</span>1<span class="ActionScriptBracket/Brace">]</span>;
+                        
+            <span class="ActionScriptDefault_Text">_fw</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_fwPt</span><span class="ActionScriptOperator">/</span><span class="ActionScriptDefault_Text">_k</span>;
+            <span class="ActionScriptDefault_Text">_fh</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_fhPt</span><span class="ActionScriptOperator">/</span><span class="ActionScriptDefault_Text">_k</span>;
+
+            <span class="ActionScriptReserved">if</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptReserved">this</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">_orientation</span> <span class="ActionScriptOperator">==</span> <span class="ActionScriptDefault_Text">Orientation</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">PORTRAIT</span> <span class="ActionScriptBracket/Brace">)</span>
+            <span class="ActionScriptBracket/Brace">{</span>
+
+                <span class="ActionScriptDefault_Text">wPt</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_fwPt</span>;
+                <span class="ActionScriptDefault_Text">hPt</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_fhPt</span>;
+                <span class="ActionScriptDefault_Text">w</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_fw</span>;
+                <span class="ActionScriptDefault_Text">h</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_fh</span>;
+                <span class="ActionScriptDefault_Text">_width</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">wPt</span>;
+                <span class="ActionScriptDefault_Text">_height</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">hPt</span>;
+
+            <span class="ActionScriptBracket/Brace">}</span> <span class="ActionScriptReserved">else</span> <span class="ActionScriptReserved">if</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptReserved">this</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">_orientation</span> <span class="ActionScriptOperator">==</span> <span class="ActionScriptDefault_Text">Orientation</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">LANDSCAPE</span> <span class="ActionScriptBracket/Brace">)</span>
+            <span class="ActionScriptBracket/Brace">{</span>
+                    
+                <span class="ActionScriptDefault_Text">wPt</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_fhPt</span>;
+                <span class="ActionScriptDefault_Text">hPt</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_fwPt</span>;
+                <span class="ActionScriptDefault_Text">w</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_fh</span>;
+                <span class="ActionScriptDefault_Text">h</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_fw</span>;
+                <span class="ActionScriptDefault_Text">_width</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">wPt</span>;
+                <span class="ActionScriptDefault_Text">_height</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">hPt</span>;
+
+            <span class="ActionScriptBracket/Brace">}</span> <span class="ActionScriptReserved">else</span> <span class="ActionScriptReserved">throw</span> <span class="ActionScriptReserved">new</span> <span class="ActionScriptDefault_Text">RangeError</span> <span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptString">'Incorrect orientation: '</span> <span class="ActionScriptOperator">+</span> <span class="ActionScriptDefault_Text">pOrientation</span><span class="ActionScriptBracket/Brace">)</span>;
+            
+            <span class="ActionScriptDefault_Text">_page</span> <span class="ActionScriptOperator">=</span> 0;
+    
+            <span class="ActionScriptDefault_Text">_annots</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptReserved">new</span> <span class="ActionScriptDefault_Text">String</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">)</span>;
+    
+            <span class="ActionScriptDefault_Text">_content</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptReserved">new</span> <span class="ActionScriptDefault_Text">String</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">)</span>;
+    
+            <span class="ActionScriptDefault_Text">transitions</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptReserved">new</span> <span class="ActionScriptDefault_Text">String</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">)</span>;
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptASDoc">/**
+         * 
+         * @return Page
+         * @example
+         * This example shows how to clone a page :
+         * &lt;div class="listing"&gt;
+         * &lt;pre&gt;
+         *
+         * var clonedPage = existingPage.clone();
+         * myPDF.addPage ( clonedPage );
+         * &lt;/pre&gt;
+         * &lt;/div&gt;
+         */</span>        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptDefault_Text">clone</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">Page</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptvar">var</span> <span class="ActionScriptDefault_Text">page</span>:<span class="ActionScriptDefault_Text">Page</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptReserved">new</span> <span class="ActionScriptDefault_Text">Page</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">orientation</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">_unit</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">size</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">rotation</span> <span class="ActionScriptBracket/Brace">)</span>;
+            
+            <span class="ActionScriptDefault_Text">page</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">content</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">content</span>;
+            <span class="ActionScriptDefault_Text">page</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">transitions</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">transitions</span>;
+            
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">page</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">get</span> <span class="ActionScriptDefault_Text">orientation</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">String</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">_orientation</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptDefault_Text">setUnit</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">unit</span>:<span class="ActionScriptDefault_Text">String</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">String</span>
+        <span class="ActionScriptBracket/Brace">{</span>    
+            <span class="ActionScriptReserved">if</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">unit</span> <span class="ActionScriptOperator">==</span> <span class="ActionScriptDefault_Text">Unit</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">POINT</span> <span class="ActionScriptBracket/Brace">)</span> <span class="ActionScriptDefault_Text">_k</span> <span class="ActionScriptOperator">=</span> 1;
+            <span class="ActionScriptReserved">else</span> <span class="ActionScriptReserved">if</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">unit</span> <span class="ActionScriptOperator">==</span> <span class="ActionScriptDefault_Text">Unit</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">MM</span> <span class="ActionScriptBracket/Brace">)</span> <span class="ActionScriptDefault_Text">_k</span> <span class="ActionScriptOperator">=</span> 72<span class="ActionScriptOperator">/</span>25.4;
+            <span class="ActionScriptReserved">else</span> <span class="ActionScriptReserved">if</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">unit</span> <span class="ActionScriptOperator">==</span> <span class="ActionScriptDefault_Text">Unit</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">CM</span> <span class="ActionScriptBracket/Brace">)</span> <span class="ActionScriptDefault_Text">_k</span> <span class="ActionScriptOperator">=</span> 72<span class="ActionScriptOperator">/</span>2.54;
+            <span class="ActionScriptReserved">else</span> <span class="ActionScriptReserved">if</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">unit</span> <span class="ActionScriptOperator">==</span> <span class="ActionScriptDefault_Text">Unit</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">INCHES</span> <span class="ActionScriptBracket/Brace">)</span> <span class="ActionScriptDefault_Text">_k</span> <span class="ActionScriptOperator">=</span> 72;
+            <span class="ActionScriptReserved">else</span> <span class="ActionScriptReserved">throw</span> <span class="ActionScriptReserved">new</span> <span class="ActionScriptDefault_Text">RangeError</span> <span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptString">'Incorrect unit: '</span> <span class="ActionScriptOperator">+</span> <span class="ActionScriptDefault_Text">unit</span><span class="ActionScriptBracket/Brace">)</span>;
+            
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">unit</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+    
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptDefault_Text">rotate</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">pRotation</span>:<span class="ActionScriptDefault_Text">Number</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptReserved">void</span>
+        <span class="ActionScriptBracket/Brace">{</span>
+    
+            <span class="ActionScriptReserved">if</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">pRotation</span> <span class="ActionScriptOperator">%</span> 90 <span class="ActionScriptBracket/Brace">)</span>
+                <span class="ActionScriptReserved">throw</span> <span class="ActionScriptReserved">new</span> <span class="ActionScriptDefault_Text">RangeError</span> <span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptString">"Rotation must be a multiple of 90"</span><span class="ActionScriptBracket/Brace">)</span>;
+    
+            <span class="ActionScriptDefault_Text">_rotation</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">pRotation</span>;
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">private</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptDefault_Text">paging</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">evt</span>:<span class="ActionScriptDefault_Text">PagingEvent</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptReserved">void</span>
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptDefault_Text">_page</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">evt</span><span class="ActionScriptOperator">.</span><span class="ActionScriptDefault_Text">page</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptASDoc">/**
+         * Lets you resize the Page dimensions
+         *  
+         * @param width
+         * @param height
+         * 
+         */</span>        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptDefault_Text">resize</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">width</span>:<span class="ActionScriptDefault_Text">Number</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">height</span>:<span class="ActionScriptDefault_Text">Number</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptReserved">void</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptDefault_Text">width</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_fwPt</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">wPt</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">width</span>;
+            <span class="ActionScriptDefault_Text">height</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_fhPt</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">hPt</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">height</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+    
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptDefault_Text">addTransition</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">style</span>:<span class="ActionScriptDefault_Text">String</span><span class="ActionScriptOperator">=</span><span class="ActionScriptString">'R'</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">duration</span>:<span class="ActionScriptDefault_Text">Number</span><span class="ActionScriptOperator">=</span>1<span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">dimension</span>:<span class="ActionScriptDefault_Text">String</span><span class="ActionScriptOperator">=</span><span class="ActionScriptString">'H'</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">motionDirection</span>:<span class="ActionScriptDefault_Text">String</span><span class="ActionScriptOperator">=</span><span class="ActionScriptString">'I'</span><span class="ActionScriptOperator">,</span> <span class="ActionScriptDefault_Text">transitionDirection</span>:<span class="ActionScriptDefault_Text">int</span><span class="ActionScriptOperator">=</span>0 <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptReserved">void</span>
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptDefault_Text">transitions</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptString">'/Trans &lt;&lt; /Type /Trans /D '</span><span class="ActionScriptOperator">+</span><span class="ActionScriptDefault_Text">duration</span><span class="ActionScriptOperator">+</span><span class="ActionScriptString">' /S /'</span><span class="ActionScriptOperator">+</span><span class="ActionScriptDefault_Text">style</span><span class="ActionScriptOperator">+</span><span class="ActionScriptString">' /Dm /'</span><span class="ActionScriptOperator">+</span><span class="ActionScriptDefault_Text">dimension</span><span class="ActionScriptOperator">+</span><span class="ActionScriptString">' /M /'</span><span class="ActionScriptOperator">+</span><span class="ActionScriptDefault_Text">motionDirection</span><span class="ActionScriptOperator">+</span><span class="ActionScriptString">' /Di /'</span><span class="ActionScriptOperator">+</span><span class="ActionScriptDefault_Text">transitionDirection</span><span class="ActionScriptOperator">+</span><span class="ActionScriptString">' &gt;&gt;'</span>;
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">set</span> <span class="ActionScriptDefault_Text">width</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">pWidth</span>:<span class="ActionScriptDefault_Text">Number</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptReserved">void</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptDefault_Text">_format</span><span class="ActionScriptBracket/Brace">[</span>0<span class="ActionScriptBracket/Brace">]</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_width</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">pWidth</span>;
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">get</span> <span class="ActionScriptDefault_Text">width</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">Number</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">_width</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">set</span> <span class="ActionScriptDefault_Text">height</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">pHeight</span>:<span class="ActionScriptDefault_Text">Number</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptReserved">void</span> 
+        <span class="ActionScriptBracket/Brace">{</span>    
+            <span class="ActionScriptDefault_Text">_format</span><span class="ActionScriptBracket/Brace">[</span>1<span class="ActionScriptBracket/Brace">]</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">_height</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">pHeight</span>;
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">get</span> <span class="ActionScriptDefault_Text">height</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">Number</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">_height</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">set</span> <span class="ActionScriptDefault_Text">wPt</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">pwPt</span>:<span class="ActionScriptDefault_Text">Number</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptReserved">void</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptDefault_Text">_wPt</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">pwPt</span>;
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">get</span> <span class="ActionScriptDefault_Text">wPt</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">Number</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">_wPt</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">set</span> <span class="ActionScriptDefault_Text">hPt</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">phPt</span>:<span class="ActionScriptDefault_Text">Number</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptReserved">void</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptDefault_Text">_hPt</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">phPt</span>;
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">get</span> <span class="ActionScriptDefault_Text">hPt</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">Number</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">_hPt</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">set</span> <span class="ActionScriptDefault_Text">w</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">pW</span>:<span class="ActionScriptDefault_Text">Number</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptReserved">void</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptDefault_Text">_w</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">pW</span>;
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">get</span> <span class="ActionScriptDefault_Text">w</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">Number</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">_w</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">set</span> <span class="ActionScriptDefault_Text">h</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">pH</span>:<span class="ActionScriptDefault_Text">Number</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptReserved">void</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptDefault_Text">_h</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">pH</span>;
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">get</span> <span class="ActionScriptDefault_Text">h</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">Number</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">_h</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">get</span> <span class="ActionScriptDefault_Text">size</span> <span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">Size</span>
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">_size</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">set</span> <span class="ActionScriptDefault_Text">size</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">size</span>:<span class="ActionScriptDefault_Text">Size</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptReserved">void</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptDefault_Text">_size</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">size</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">set</span> <span class="ActionScriptDefault_Text">rotation</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">pRotation</span>:<span class="ActionScriptDefault_Text">Number</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptReserved">void</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptDefault_Text">_rotation</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">pRotation</span>;
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">get</span> <span class="ActionScriptDefault_Text">rotation</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">Number</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">_rotation</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">get</span> <span class="ActionScriptDefault_Text">page</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">int</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">_page</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">set</span> <span class="ActionScriptDefault_Text">content</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">pContent</span>:<span class="ActionScriptDefault_Text">String</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptReserved">void</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptDefault_Text">_content</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">pContent</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">get</span> <span class="ActionScriptDefault_Text">content</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">String</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">_content</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">get</span> <span class="ActionScriptDefault_Text">transitions</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">String</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">_pageTransition</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">set</span> <span class="ActionScriptDefault_Text">transitions</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">pTransition</span>:<span class="ActionScriptDefault_Text">String</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptReserved">void</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptDefault_Text">_pageTransition</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">pTransition</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">get</span> <span class="ActionScriptDefault_Text">annotations</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">String</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptDefault_Text">_annots</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptReserved">set</span> <span class="ActionScriptDefault_Text">annotations</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptDefault_Text">pAnnotation</span>:<span class="ActionScriptDefault_Text">String</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptReserved">void</span> 
+        <span class="ActionScriptBracket/Brace">{</span>    
+            <span class="ActionScriptDefault_Text">_annots</span> <span class="ActionScriptOperator">=</span> <span class="ActionScriptDefault_Text">pAnnotation</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+        
+        <span class="ActionScriptReserved">public</span> <span class="ActionScriptfunction">function</span> <span class="ActionScriptDefault_Text">toString</span> <span class="ActionScriptBracket/Brace">(</span> <span class="ActionScriptBracket/Brace">)</span>:<span class="ActionScriptDefault_Text">String</span> 
+        <span class="ActionScriptBracket/Brace">{</span>
+            <span class="ActionScriptReserved">return</span> <span class="ActionScriptString">"[Page orientation="</span><span class="ActionScriptOperator">+</span><span class="ActionScriptDefault_Text">_orientation</span><span class="ActionScriptOperator">+</span><span class="ActionScriptString">" page="</span><span class="ActionScriptOperator">+</span><span class="ActionScriptDefault_Text">page</span><span class="ActionScriptOperator">+</span><span class="ActionScriptString">" width="</span><span class="ActionScriptOperator">+</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptDefault_Text">w</span><span class="ActionScriptOperator">&gt;&gt;</span>0<span class="ActionScriptBracket/Brace">)</span><span class="ActionScriptOperator">+</span><span class="ActionScriptString">" height="</span><span class="ActionScriptOperator">+</span><span class="ActionScriptBracket/Brace">(</span><span class="ActionScriptDefault_Text">h</span><span class="ActionScriptOperator">&gt;&gt;</span>0<span class="ActionScriptBracket/Brace">)</span><span class="ActionScriptOperator">+</span><span class="ActionScriptString">"]"</span>;    
+        <span class="ActionScriptBracket/Brace">}</span>
+    <span class="ActionScriptBracket/Brace">}</span>
+<span class="ActionScriptBracket/Brace">}</span></pre></body>
+</html>
