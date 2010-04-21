@@ -1,5 +1,5 @@
 Package: ExpressionView
-Version: 0.99.1
+Version: 1.0
 Date: Apr 21, 2010
 Title: Visualize biclusters identified in gene expression data
 Author: Andreas Luscher <andreas.luescher@a3.epfl.ch>
@@ -15,4 +15,4 @@ Suggests: ALL, hgu95av2.db, biclust
 biocViews: Classification, Visualization, Microarray, GeneExpression
 Collate: AllGenerics.R export.R launch.R order.R zzz.R
 License: GPL (>= 2)
-Packaged: 2010-04-21 14:39:59 UTC; gabor
+Packaged: 2010-04-21 20:35:07 UTC; gabor
