@@ -1,18 +1,18 @@
 Package: ExpressionView
-Version: 0.99.0
-Date: Apr 12, 2010
+Version: 1.0
+Date: Apr 21, 2010
 Title: Visualize biclusters identified in gene expression data
 Author: Andreas Luscher <andreas.luescher@a3.epfl.ch>
 Maintainer: Gabor Csardi <Gabor.Csardi@unil.ch>
 Description: ExpressionView visualizes possibly overlapping biclusters
 	in a gene expression matrix. It can use the result of the ISA
 	method (eisa package) or the algorithms in the biclust
-	package. The viewer itself was developed using Adobe Flex and
-	runs in a flash-enabled web browser.
+	package or others. The viewer itself was developed using Adobe
+	Flex and runs in a flash-enabled web browser.
 Depends: caTools, bitops
 Imports: methods, isa2, eisa, GO.db, KEGG.db, AnnotationDbi
 Suggests: ALL, hgu95av2.db, biclust
 biocViews: Classification, Visualization, Microarray, GeneExpression
 Collate: AllGenerics.R export.R launch.R order.R zzz.R
 License: GPL (>= 2)
-Packaged: 2010-04-12 10:33:30 UTC; gabor
+Packaged: 2010-04-21 14:39:59 UTC; gabor

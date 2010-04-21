@@ -1,55 +1,42 @@
 ########################################################################
 ## export Biclust
 
+ExportEV.Biclust <- function(biclusters, eset,
+                             order=OrderEV(biclusters),
+                             filename=file.choose(),
+                             norm=c("sample", "feature", "raw", "x",
+                             "y"), cutoff=0.95, 
+                             description=NULL, ...) { 
+  eisamodules <- as(biclusters, "ISAModules")
+  eisamodules@rundata$annotation <- annotation(eset)
+  eisamodules@rundata$prenormalize <- FALSE
+  ExportEV(eisamodules, eset, order, filename, norm, cutoff, description, ...)
+}
 
 if (require(biclust)) {
-     setMethod("ExportEV", signature(biclusters="Biclust"), 
-         function(biclusters, eset, order, filename, norm, cutoff, description) 
-         ExportEV.Biclust(biclusters, eset, order, filename, norm, cutoff, description)
-     )
+  setMethod("ExportEV", signature(biclusters="Biclust"), ExportEV.Biclust)
 }
-
-ExportEV.Biclust <- function(biclusters, eset, order, filename, norm, cutoff, description) {
-    eisamodules <- as(biclusters, "ISAModules")
-    eisamodules@rundata$annotation <- annotation(eset)
-    eisamodules@rundata$prenormalize <- FALSE
-    ExportEV(eisamodules, eset, order, filename, norm, cutoff, description)
-}
-
 
 ########################################################################
 ## export EISA
 
-if (require(eisa)) {
-    setMethod("ExportEV", signature(biclusters="ISAModules"), 
-        function(biclusters, eset, order, filename, norm, cutoff, description) 
-        ExportEV.ISAModules(biclusters, eset, order, filename, norm, cutoff, description)
-    )
+mytoString <- function(x) {
+  paste(x, collapse=", ")
 }
 
-ExportEV.ISAModules <- function(biclusters, eset, order, filename, norm, cutoff, description) {
+ExportEV.ISAModules <- function(biclusters, eset,
+                                order=OrderEV(biclusters),
+                                filename=file.choose(),
+                                norm=c("sample", "feature", "raw",
+                                "x", "y"),
+                                cutoff=0.95, 
+                                description=NULL,
+                                GO=ISAGO(biclusters),
+                                KEGG=ISAKEGG(biclusters), ...) {
+  
+    norm <- match.arg(norm)
 
-    if ( missing(order) ) {
-        order <- OrderEV(biclusters)
-    }
-
-    if ( missing(filename) ) {
-        con <- file(file.choose(TRUE), open="w")
-    } else {
-        if ( filename == "" ) {
-            stop("indicate filename or omit argument to choose it interactively.", call.=FALSE)
-        }
-        con <- file(filename, open="w", blocking = TRUE)
-    }
-    
-    if ( missing(norm) ) {
-        ## x, y, raw
-        norm <- "y"
-    }
-    
-    if ( missing(cutoff) ) {
-        cutoff <- 0.95
-    }
+    con <- file(filename, open="w", blocking=TRUE)
     
     ## in case biclusters were converted to ISAModules
     if ( is.null(biclusters@rundata$annotation) ) {
@@ -81,10 +68,7 @@ ExportEV.ISAModules <- function(biclusters, eset, order, filename, norm, cutoff,
     writeLines("\t</summary>", con)
 
     go.table <- toTable(GOTERM)
-    gos <- ISAGO(biclusters)
-
     kegg.table <- toTable(KEGGPATHID2NAME)
-    keggs <- ISAKEGG(biclusters)
 
     ## get gene info
     ann <- annotation(eset)
@@ -252,10 +236,10 @@ ExportEV.ISAModules <- function(biclusters, eset, order, filename, norm, cutoff,
             }
 
             genesp <- match(as.vector(which(biclusters@genes[,module]!=0)),geneMaps[[1]])[geneMaps[[module+1]]]
-            writeLines(paste("\t\t\t<containedgenes>", toString(genesp), "</containedgenes>", sep=""), con)
+            writeLines(paste("\t\t\t<containedgenes>", mytoString(genesp), "</containedgenes>", sep=""), con)
             scores <- as.array(as.real(genes[genesp]))
             scores <- apply(scores, 1, formatter)
-            writeLines(paste("\t\t\t<genescores>", toString(scores), "</genescores>", sep=""), con)
+            writeLines(paste("\t\t\t<genescores>", mytoString(scores), "</genescores>", sep=""), con)
 
             intersectingbiclusterssamples = list();
             samples <- biclusters@conditions[,module][sampleMaps[[1]]]
@@ -266,20 +250,20 @@ ExportEV.ISAModules <- function(biclusters, eset, order, filename, norm, cutoff,
             }
 
             samplesp <- match(as.vector(which(biclusters@conditions[,module]!=0)),sampleMaps[[1]])[sampleMaps[[module+1]]]
-            writeLines(paste("\t\t\t<containedsamples>", toString(samplesp), "</containedsamples>", sep=""), con)
+            writeLines(paste("\t\t\t<containedsamples>", mytoString(samplesp), "</containedsamples>", sep=""), con)
             scores <- as.array(as.real(samples[samplesp]))
             scores <- apply(scores, 1, formatter)
-            writeLines(paste("\t\t\t<samplescores>", toString(scores), "</samplescores>", sep=""), con)
+            writeLines(paste("\t\t\t<samplescores>", mytoString(scores), "</samplescores>", sep=""), con)
 
             intersectingbiclusters <- intersect(unique(intersectingbiclustersgenes), unique(intersectingbiclusterssamples))
-            writeLines(paste("\t\t\t<intersectingmodules>", toString(intersectingbiclusters), "</intersectingmodules>", sep=""), con)
+            writeLines(paste("\t\t\t<intersectingmodules>", mytoString(intersectingbiclusters), "</intersectingmodules>", sep=""), con)
 
             writeLines("", con)
 
             writeLines("\t\t\t<gos>", con)
             k <- 1
             for ( i in 1:3 ) {
-                s <- summary(gos[[i]])[[module]]
+                s <- summary(GO[[i]])[[module]]
                 if ( dim(s)[1] > 0 ) {
                     temp <- match(rownames(s), go.table[,1])
                     
@@ -305,7 +289,7 @@ ExportEV.ISAModules <- function(biclusters, eset, order, filename, norm, cutoff,
             writeLines("", con)
 
             writeLines("\t\t\t<keggs>", con)
-            s <- summary(keggs)[[module]]
+            s <- summary(KEGG)[[module]]
             if ( dim(s)[1] > 0 ) {
                 temp <- match(rownames(s), kegg.table[,1])
                 for ( j in 1:dim(s)[1] ) {
@@ -363,43 +347,22 @@ ExportEV.ISAModules <- function(biclusters, eset, order, filename, norm, cutoff,
 
 }
 
+if (require(eisa)) {
+    setMethod("ExportEV", signature(biclusters="ISAModules"), ExportEV.ISAModules)
+}
 
 ########################################################################
 ## export list
 
-setMethod("ExportEV", signature(biclusters="list"), 
-    function(biclusters, eset, order, filename, norm, cutoff, description) 
-    ExportEV.list(biclusters, eset, order, filename, norm, cutoff, description)
-)
+ExportEV.list <- function(biclusters, eset, order=OrderEV(biclusters),
+                          filename=file.choose(),
+                          norm=c("sample", "feature", "raw", "x", "y"), cutoff=0.95,
+                          description=NULL, ...) {
 
-ExportEV.list <- function(biclusters, eset, order, filename, norm, cutoff, description) {
+    norm <- match.arg(norm)
 
-    if ( missing(order) ) {
-        order <- OrderEV(biclusters)
-    }
-
-    if ( missing(filename) ) {
-        con <- file(file.choose(TRUE), open="w")
-    } else {
-        if ( filename == "" ) {
-            stop("indicate filename or omit argument to choose it interactively.", call.=FALSE)
-        }
-        con <- file(filename, open="w", blocking = TRUE)
-    }
-    
-    if ( missing(norm) ) {
-        ## x, y, raw
-        norm <- "y"
-    }
-    
-    if ( missing(cutoff) ) {
-        cutoff <- 0.95
-    }
-    
-    if ( missing(description) ) {
-        description <- NULL
-    }
-
+    con <- file(filename, open="w", blocking=TRUE)    
+  
     data <- eset
 
     geneMaps <- order$cols
@@ -592,10 +555,10 @@ ExportEV.list <- function(biclusters, eset, order, filename, norm, cutoff, descr
                 }
 
                 genesp <- match(as.vector(which(biclusters$columns[,module]!=0)),geneMaps[[1]])[geneMaps[[module+1]]]
-                writeLines(paste("\t\t\t<containedgenes>", toString(genesp), "</containedgenes>", sep=""), con)
+                writeLines(paste("\t\t\t<containedgenes>", mytoString(genesp), "</containedgenes>", sep=""), con)
                 scores <- as.array(as.real(genes[genesp]))
                 scores <- apply(scores, 1, formatter)
-                writeLines(paste("\t\t\t<genescores>", toString(scores), "</genescores>", sep=""), con)
+                writeLines(paste("\t\t\t<genescores>", mytoString(scores), "</genescores>", sep=""), con)
 
                 intersectingbiclusterssamples = list();
                 samples <- biclusters$rows[,module][sampleMaps[[1]]]
@@ -606,13 +569,13 @@ ExportEV.list <- function(biclusters, eset, order, filename, norm, cutoff, descr
                 }
 
                 samplesp <- match(as.vector(which(biclusters$rows[,module]!=0)),sampleMaps[[1]])[sampleMaps[[module+1]]]
-                writeLines(paste("\t\t\t<containedsamples>", toString(samplesp), "</containedsamples>", sep=""), con)
+                writeLines(paste("\t\t\t<containedsamples>", mytoString(samplesp), "</containedsamples>", sep=""), con)
                 scores <- as.array(as.real(samples[samplesp]))
                 scores <- apply(scores, 1, formatter)
-                writeLines(paste("\t\t\t<samplescores>", toString(scores), "</samplescores>", sep=""), con)
+                writeLines(paste("\t\t\t<samplescores>", mytoString(scores), "</samplescores>", sep=""), con)
 
                 intersectingbiclusters <- intersect(unique(intersectingbiclustersgenes), unique(intersectingbiclusterssamples))
-                writeLines(paste("\t\t\t<intersectingmodules>", toString(intersectingbiclusters), "</intersectingmodules>", sep=""), con)
+                writeLines(paste("\t\t\t<intersectingmodules>", mytoString(intersectingbiclusters), "</intersectingmodules>", sep=""), con)
 
                 writeLines("", con)
 
@@ -658,6 +621,7 @@ ExportEV.list <- function(biclusters, eset, order, filename, norm, cutoff, descr
 
 }
 
+setMethod("ExportEV", signature(biclusters="list"), ExportEV.list)
 
 normalize <- function(data, cutoff) {
 
