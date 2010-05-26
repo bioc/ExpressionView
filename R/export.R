@@ -13,15 +13,18 @@ ExportEV.Biclust <- function(biclusters, eset,
   ExportEV(eisamodules, eset, order, filename, norm, cutoff, description, ...)
 }
 
-if (require(biclust)) {
-  setMethod("ExportEV", signature(biclusters="Biclust"), ExportEV.Biclust)
-}
+setMethod("ExportEV", signature(biclusters="Biclust"), ExportEV.Biclust)
 
 ########################################################################
 ## export EISA
 
 mytoString <- function(x) {
   paste(x, collapse=" ")
+}
+
+base64cut <- function(x, at=76) {
+  .Call("EV_base64cut", as.character(x), as.integer(at),
+        package="igraph")
 }
 
 allowed <- c("iterations", "oscillation", "thr.row", "thr.col",
@@ -113,14 +116,12 @@ ExportEV.ISAModules <- function(biclusters, eset,
         writeLines("", con)
 
         genemap <- match(Genes, symbol.table[,1])
-        for ( gene in 1:nGenes ) {
-            writeLines("\t\t<gene>", con)
-                writeLines(paste("\t\t\t<id>", gene, "</id>", sep=""), con)
-                writeLines(paste("\t\t\t<name>", Genes[gene], "</name>", sep=""), con)
-                writeLines(paste("\t\t\t<symbol>", symbol.table[genemap[gene],2], "</symbol>", sep=""), con)
-                writeLines(paste("\t\t\t<entrezid>", entrez.table[genemap[gene],2], "</entrezid>", sep=""), con)
-            writeLines("\t\t</gene>", con)
-        }
+        genetext <- paste(sep="", "\t\t<gene>\n\t\t\t<id>", seq_len(nGenes),
+                          "</id>\n\t\t\t<name>", Genes,
+                          "</name>\n\t\t\t<symbol>", symbol.table[genemap,2],
+                          "</symbol>\n\t\t\t<entrezid>", entrez.table[genemap,2],
+                          "</entrezid>\n\t\t</gene>")
+        writeLines(genetext, con)
             
     writeLines("\t</genes>", con)
 
@@ -355,11 +356,8 @@ ExportEV.ISAModules <- function(biclusters, eset,
     ## data
     writeLines("\t<data>", con)
     
-        temp <- base64encode(writeBin(Data, raw(), size=1))
-        ## line breaks after 76 characters
-        for ( i in 1:ceiling(nchar(temp) / 76) ) {
-            writeLines(substr(temp, (i-1)*76 + 1, i*76), con)
-        }
+    temp <- base64encode(writeBin(Data, raw(), size=1))
+    cat(base64cut(temp), file=con)
         
     writeLines("\t</data>", con)
 
@@ -369,9 +367,7 @@ ExportEV.ISAModules <- function(biclusters, eset,
 
 }
 
-if (require(eisa)) {
-    setMethod("ExportEV", signature(biclusters="ISAModules"), ExportEV.ISAModules)
-}
+setMethod("ExportEV", signature(biclusters="ISAModules"), ExportEV.ISAModules)
 
 ########################################################################
 ## export list
@@ -654,11 +650,8 @@ ExportEV.list <- function(biclusters, eset, order=OrderEV(biclusters),
     ## data
     writeLines("\t<data>", con)
     
-        temp <- base64encode(writeBin(Data, raw(), size=1))
-        ## line breaks after 76 characters
-        for ( i in 1:ceiling(nchar(temp) / 76) ) {
-            writeLines(substr(temp, (i-1)*76 + 1, i*76), con)
-        }
+    temp <- base64encode(writeBin(Data, raw(), size=1))
+    cat(base64cut(temp), file=con)
         
     writeLines("\t</data>", con)
 
