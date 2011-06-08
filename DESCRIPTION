@@ -15,4 +15,3 @@ Suggests: ALL, hgu95av2.db, biclust, GO.db, KEGG.db, AnnotationDbi, affy
 biocViews: Classification, Visualization, Microarray, GeneExpression
 Collate: AllGenerics.R export.R launch.R order.R zzz.R
 License: GPL (>= 2)
-Packaged: 2010-05-26 16:46:25 UTC; gabor
