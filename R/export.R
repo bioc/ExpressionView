@@ -260,7 +260,7 @@ ExportEV.ISAModules <- function(biclusters, eset,
 
             genesp <- match(as.vector(which(biclusters@genes[,module]!=0)),geneMaps[[1]])[geneMaps[[module+1]]]
             writeLines(paste("\t\t\t<containedgenes>", mytoString(genesp), "</containedgenes>", sep=""), con)
-            scores <- as.array(as.real(genes[genesp]))
+            scores <- as.array(as.double(genes[genesp]))
             scores <- apply(scores, 1, formatter)
             writeLines(paste("\t\t\t<genescores>", mytoString(scores), "</genescores>", sep=""), con)
 
@@ -274,7 +274,7 @@ ExportEV.ISAModules <- function(biclusters, eset,
 
             samplesp <- match(as.vector(which(biclusters@conditions[,module]!=0)),sampleMaps[[1]])[sampleMaps[[module+1]]]
             writeLines(paste("\t\t\t<containedsamples>", mytoString(samplesp), "</containedsamples>", sep=""), con)
-            scores <- as.array(as.real(samples[samplesp]))
+            scores <- as.array(as.double(samples[samplesp]))
             scores <- apply(scores, 1, formatter)
             writeLines(paste("\t\t\t<samplescores>", mytoString(scores), "</samplescores>", sep=""), con)
 
@@ -599,7 +599,7 @@ ExportEV.list <- function(biclusters, eset, order=OrderEV(biclusters),
 
                 genesp <- match(as.vector(which(biclusters$columns[,module]!=0)),geneMaps[[1]])[geneMaps[[module+1]]]
                 writeLines(paste("\t\t\t<containedgenes>", mytoString(genesp), "</containedgenes>", sep=""), con)
-                scores <- as.array(as.real(genes[genesp]))
+                scores <- as.array(as.double(genes[genesp]))
                 scores <- apply(scores, 1, formatter)
                 writeLines(paste("\t\t\t<genescores>", mytoString(scores), "</genescores>", sep=""), con)
 
@@ -613,7 +613,7 @@ ExportEV.list <- function(biclusters, eset, order=OrderEV(biclusters),
 
                 samplesp <- match(as.vector(which(biclusters$rows[,module]!=0)),sampleMaps[[1]])[sampleMaps[[module+1]]]
                 writeLines(paste("\t\t\t<containedsamples>", mytoString(samplesp), "</containedsamples>", sep=""), con)
-                scores <- as.array(as.real(samples[samplesp]))
+                scores <- as.array(as.double(samples[samplesp]))
                 scores <- apply(scores, 1, formatter)
                 writeLines(paste("\t\t\t<samplescores>", mytoString(scores), "</samplescores>", sep=""), con)
 
