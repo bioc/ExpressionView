@@ -20,6 +20,7 @@
 #include <algorithm>
 #include <numeric>
 #include <string>
+#include <stdlib.h>
 
 #include "orderclusters.h"
 
