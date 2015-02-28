@@ -1,5 +1,5 @@
 Package: ExpressionView
-Version: 1.19.0
+Version: 1.19.1
 Date: Sep 23, 2012
 Title: Visualize biclusters identified in gene expression data
 Author: Andreas Luscher <andreas.luescher@a3.epfl.ch>
@@ -12,6 +12,6 @@ Description: ExpressionView visualizes possibly overlapping biclusters
 Depends: caTools, bitops, methods, isa2, eisa, GO.db, KEGG.db, AnnotationDbi
 Imports: methods, isa2, eisa, GO.db, KEGG.db, AnnotationDbi
 Suggests: ALL, hgu95av2.db, biclust, affy
-biocViews: Classification, Visualization, Microarray, GeneExpression
+biocViews: Classification, Visualization, Microarray, GeneExpression, GO, KEGG
 Collate: AllGenerics.R export.R launch.R order.R zzz.R
 License: GPL (>= 2)
